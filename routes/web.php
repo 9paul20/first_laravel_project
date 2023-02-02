@@ -21,3 +21,7 @@ Route::get('/', function () {
 Route::get('posts', function () {
     return App\Post::all();
 })->name('posts');
+
+Route::get('admin', function () {
+    return view('admin.layout');
+})->name('admin');
