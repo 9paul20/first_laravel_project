@@ -25,7 +25,9 @@ Route::get('posts', function () {
 Route::get('admin', function () {
     return view('admin.layout');
 })->name('admin');
-Auth::routes();
 
-#Route::get('/home', 'HomeController@index')->name('home');
-Route::auth();
+Auth::routes(['register' => false]);
+//Auth::routes();
+
+//Route::get('/home', 'HomeController@index')->name('home');
+//Route::auth();
