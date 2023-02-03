@@ -26,6 +26,10 @@ Route::get('admin', function () {
     return view('admin.layout');
 })->name('admin');
 
+Route::get('home', function () {
+    return view('admin.layout');
+})->middleware('auth')->name('home');
+
 Auth::routes(['register' => false]);
 //Auth::routes();
 

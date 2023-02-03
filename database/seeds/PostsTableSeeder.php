@@ -3,6 +3,7 @@
 use App\Post;
 use App\Category;
 use App\Tag;
+use App\User;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 
@@ -15,6 +16,7 @@ class PostsTableSeeder extends Seeder
      */
     public function run()
     {
+        User::truncate();
         Category::truncate();
         Tag::truncate();
         Post::truncate();
@@ -78,5 +80,17 @@ class PostsTableSeeder extends Seeder
         $post->published_at = Carbon::now();
         $post->category_id = 1;
         $post->save();
+
+        $user= new User;
+        $user->name = 'Uno';
+        $user->email = 'uno@correo.com';
+        $user->password = bcrypt('123');
+        $user->save();
+
+        $user= new User;
+        $user->name = 'John Doe';
+        $user->email = 'john@doe.com';
+        $user->password = bcrypt('123');
+        $user->save();
     }
 }
