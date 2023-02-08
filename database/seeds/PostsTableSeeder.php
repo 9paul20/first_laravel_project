@@ -29,6 +29,14 @@ class PostsTableSeeder extends Seeder
         $category->name = 'Categoria 2';
         $category->save();
 
+        $category = new Category;
+        $category->name = 'Categoria 3';
+        $category->save();
+
+        $category = new Category;
+        $category->name = 'Categoria 4';
+        $category->save();
+
         $tag = new Tag;
         $tag->name = 'Tag 1';
         $tag->save();
@@ -51,35 +59,67 @@ class PostsTableSeeder extends Seeder
 
         $post = new Post;
         $post->title = "Primer Post";
+        $post->url = str_slug("Primer Post");
         $post->excerpt = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do";
         $post->body = "<p>Lorem ipsum dolor sit amet, consectetur adip</p>";
         $post->published_at = Carbon::now()->subDays(2);
         $post->category_id = 1;
         $post->save();
+
+        $post->tags()-attached(Tag::create(['name' => 'Tag 1']));
+        $post->tags()-attached(Tag::create(['name' => 'Tag 4']));
+        $post->tags()-attached(Tag::create(['name' => 'Tag 5']));
 
         $post = new Post;
         $post->title = "Segundo Post";
+        $post->url = str_slug("Segundo Post");
         $post->excerpt = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do";
         $post->body = "<p>Lorem ipsum dolor sit amet, consectetur adip</p>";
         $post->published_at = Carbon::now()->subDays(2);
         $post->category_id = 2;
         $post->save();
 
+        $post->tags()-attached(Tag::create(['name' => 'Tag 1']));
+        $post->tags()-attached(Tag::create(['name' => 'Tag 2']));
+        $post->tags()-attached(Tag::create(['name' => 'Tag 3']));
+        $post->tags()-attached(Tag::create(['name' => 'Tag 4']));
+
         $post = new Post;
         $post->title = "Tercer Post";
+        $post->url = str_slug("Tercer Post");
         $post->excerpt = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do";
         $post->body = "<p>Lorem ipsum dolor sit amet, consectetur adip</p>";
         $post->published_at = Carbon::now();
         $post->category_id = 2;
         $post->save();
 
+        $post->tags()-attached(Tag::create(['name' => 'Tag 1']));
+        $post->tags()-attached(Tag::create(['name' => 'Tag 3']));
+
         $post = new Post;
         $post->title = "Cuarto Post";
+        $post->url = str_slug("Cuarto Post");
         $post->excerpt = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do";
         $post->body = "<p>Lorem ipsum dolor sit amet, consectetur adip</p>";
         $post->published_at = Carbon::now();
         $post->category_id = 1;
         $post->save();
+
+        $post->tags()-attached(Tag::create(['name' => 'Tag 1']));
+        $post->tags()-attached(Tag::create(['name' => 'Tag 2']));
+        $post->tags()-attached(Tag::create(['name' => 'Tag 3']));
+
+        $post = new Post;
+        $post->title = "Quinto Post";
+        $post->url = str_slug("Quinto Post");
+        $post->excerpt = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do";
+        $post->body = "<p>Lorem ipsum dolor sit amet, consectetur adip</p>";
+        $post->published_at = Carbon::now();
+        $post->category_id = 1;
+        $post->save();
+
+        $post->tags()-attached(Tag::create(['name' => 'Tag 1']));
+        $post->tags()-attached(Tag::create(['name' => 'Tag 2']));
 
         $user= new User;
         $user->name = 'Uno';

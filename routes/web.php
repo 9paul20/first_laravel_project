@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', 'PagesController@home')->name('welcome');
+Route::get('blog/{post}', 'PostsController@show')->name('show');
 
 Auth::routes(['register' => false]);
 
@@ -35,7 +36,11 @@ Route::group(
     ],
     function () {
         Route::get('posts', 'PostsController@index')->name('admin.posts.index');
+        Route::get('posts/create', 'PostsController@create')->name('admin.posts.create');
         Route::get('/', 'AdminController@index')->name('admin');
+        Route::post('posts/store', 'PostsController@store')->name('admin.posts.store');
+        Route::get('posts/{post}', 'PostsController@edit')->name('admin.posts.edit');
+        Route::put('posts/{post}', 'PostsController@update')->name('admin.posts.update');
 });
 
 
