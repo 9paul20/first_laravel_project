@@ -12,6 +12,8 @@
     <!-- Select2 -->
     <link rel="stylesheet" href="/adminlte/plugins/select2/css/select2.min.css">
     <link rel="stylesheet" href="/adminlte/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+    <!-- Dropzone-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/dropzone.min.css" integrity="sha512-jU/7UFiaW5UBGODEopEqnbIAHOI8fO6T99m7Tsmqs2gkdujByJfkCbbfPSN4Wlqlb9TGnsuC0YgUgWkRBK7B9A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 @endpush
 
 @section('header')
@@ -68,13 +70,22 @@
                             @endif
                         </div>
                         <div class="form-group">
-                            <label for="excerpt">Contenido</label>
+                            <label for="body">Contenido</label>
                             <textarea name="body" id="body" >
                                 {{-- Redacta <em>el</em> <u>cuerpo</u> del <strong>post</strong> --}}
                                 {{ old('body', $post->body) }}
                             </textarea>
                             @if ($errors->any())
                                 <strong class="text-danger">{{ $errors->first('body') }}</strong>
+                            @endif
+                        </div>
+                        <div class="form-group">
+                            <label for="iframe">Contenido HTML extra</label>
+                            <textarea class="form-control" rows="3" name="iframe" id="iframe">
+                                {{ old('iframe', $post->iframe) }}
+                            </textarea>
+                            @if ($errors->any())
+                                <strong class="text-danger">{{ $errors->first('iframe') }}</strong>
                             @endif
                         </div>
 
@@ -94,13 +105,15 @@
                         </div>
                         <div class="form-group">
                             <label for="category_id">Categoria</label>
-                            <select class="form-control {{ $errors->has('category_id')? 'is-invalid' : '' }}" name="category_id" id="category_id">
-                                <option value="">Selecciona una categoria</option>
+                            <div class="">
+                                <select class="form-control select2 select2-blue {{ $errors->has('category_id')? 'is-invalid' : '' }}" data-dropdown-css-class="select2-blue" name="category_id" id="category_id">
+                                    <option value="">Selecciona una categoria</option>
                                 @foreach ($categories as $category)
                                     <option value="{{ $category->id }}" {{ old('category_id', $post->category_id) == $category->id ? 'selected' : '' }}>{{ $category->name }}</option>
                                 @endforeach
-                            </select>
-                            @if ($errors->any())
+                                </select>
+                            </div>
+                        @if ($errors->any())
                                 <div class="invalid-feedback">
                                     <strong>{{ $errors->first('category_id') }}</strong>
                                 </div>
@@ -121,6 +134,9 @@
                                 <strong class="text-danger">{{ $errors->first('tags') }}</strong>
                             @endif
                         </div>
+                        <div class="form-group">
+                            <div class="dropzone"></div>
+                        </div>
                         {{-- <div class="form-group">
                             <label for="fileup">Archivo a subir</label>
                             <div class="input-group">
@@ -138,6 +154,20 @@
                         <button type="submit" class="btn btn-primary btn-block">Publicar</button>
                     </div>
                 </form>
+                <div class="row">
+                    @if($post->photos->count())
+                    @foreach($post->photos as $photo)
+                        <form method="POST" action="{{ route('admin.photos.destroy', $photo) }}">
+                            {{ method_field('DELETE') }}
+                            {{ csrf_field() }}
+                            <div class="col-md-1">
+                                <button class="btn btn-danger btn-xs" style="position: absolute"><i class="fas fa-times"></i></button>
+                                <img class="img-responsive" src="/storage/{{ ($photo->url) }}" width="120" height="120">
+                            </div>
+                        </form>
+                    @endforeach
+                    @endif
+                </div>
             </div>
         </div>
         @endsection
@@ -156,6 +186,8 @@
             <script src="/adminlte/plugins/summernote/summernote-bs4.min.js"></script>
             <!-- Select2 -->
             <script src="/adminlte/plugins/select2/js/select2.full.min.js"></script>
+            <!--Dropzone-->
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/dropzone.min.js" integrity="sha512-U2WE1ktpMTuRBPoCFDzomoIorbOyUv0sP8B+INA3EzNAhehbzED1rOJg6bCqPf/Tuposxb5ja/MAUnC8THSbLQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
             <script>
                 $(function () {
@@ -194,7 +226,26 @@
                     // Summernote
                     $('#body').summernote();
                     //Initialize Select2 Elements
-                    $('.select2').select2();
+                    $('.select2').select2({
+                        tags: true,
+                    });
                 });
+                var myDropzone = new Dropzone('.dropzone',{
+                    url: '/admin/posts/{{ $post->url }}/photos',
+                    acceptedFiles: 'image/*',
+                    maxFilesize: 2,
+                    paramName: 'photo',
+                    thumbnailWidth: 200,
+                    headers:{
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    dictDefaultMessage: 'Arrastra la imagen a subir',
+                });
+                myDropzone.on('error',function(file,res){
+                    //console.log(res.errors.photo[0]);
+                    var msg = res.errors.photo[0];
+                    $('.dz-error-message:last > span').text(msg);
+                });
+                Dropzone.autoDiscover = false;
             </script>
     @endpush

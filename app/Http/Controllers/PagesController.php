@@ -8,7 +8,19 @@ use Illuminate\Http\Request;
 class PagesController extends Controller
 {
     public function home(){
-        $posts = Post::published()->get();
-        return view('welcome', compact('posts'));
+        $posts = Post::published()->paginate(10);
+        return view('pages.home', compact('posts'));
+    }
+
+    public function about(){
+        return view('pages.about');
+    }
+
+    public function archive(){
+        return view('pages.archive');
+    }
+
+    public function contact(){
+        return view('pages.contact');
     }
 }

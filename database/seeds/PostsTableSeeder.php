@@ -6,6 +6,7 @@ use App\Tag;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Storage;
 
 class PostsTableSeeder extends Seeder
 {
@@ -16,6 +17,7 @@ class PostsTableSeeder extends Seeder
      */
     public function run()
     {
+        Storage::disk('public')->deleteDirectory('posts');
         User::truncate();
         Category::truncate();
         Tag::truncate();
@@ -37,89 +39,65 @@ class PostsTableSeeder extends Seeder
         $category->name = 'Categoria 4';
         $category->save();
 
-        $tag = new Tag;
-        $tag->name = 'Tag 1';
-        $tag->save();
-
-        $tag = new Tag;
-        $tag->name = 'Tag 2';
-        $tag->save();
-
-        $tag = new Tag;
-        $tag->name = 'Tag 3';
-        $tag->save();
-
-        $tag = new Tag;
-        $tag->name = 'Tag 4';
-        $tag->save();
-
-        $tag = new Tag;
-        $tag->name = 'Tag 5';
-        $tag->save();
-
         $post = new Post;
         $post->title = "Primer Post";
         $post->url = str_slug("Primer Post");
         $post->excerpt = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do";
         $post->body = "<p>Lorem ipsum dolor sit amet, consectetur adip</p>";
-        $post->published_at = Carbon::now()->subDays(2);
+        $post->iframe = "";
+        $post->published_at = Carbon::now()->subDays()->format('Y-m-d H:i:s');
         $post->category_id = 1;
         $post->save();
 
-        $post->tags()-attached(Tag::create(['name' => 'Tag 1']));
-        $post->tags()-attached(Tag::create(['name' => 'Tag 4']));
-        $post->tags()-attached(Tag::create(['name' => 'Tag 5']));
+        $post->tags()->attach(Tag::create(['name' => 'Tag 1']));
 
         $post = new Post;
         $post->title = "Segundo Post";
         $post->url = str_slug("Segundo Post");
         $post->excerpt = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do";
         $post->body = "<p>Lorem ipsum dolor sit amet, consectetur adip</p>";
-        $post->published_at = Carbon::now()->subDays(2);
+        $post->iframe = "";
+        $post->published_at = Carbon::now()->subDays(2)->format('Y-m-d H:i:s');
         $post->category_id = 2;
         $post->save();
 
-        $post->tags()-attached(Tag::create(['name' => 'Tag 1']));
-        $post->tags()-attached(Tag::create(['name' => 'Tag 2']));
-        $post->tags()-attached(Tag::create(['name' => 'Tag 3']));
-        $post->tags()-attached(Tag::create(['name' => 'Tag 4']));
+        $post->tags()->attach(Tag::create(['name' => 'Tag 2']));
 
         $post = new Post;
         $post->title = "Tercer Post";
         $post->url = str_slug("Tercer Post");
         $post->excerpt = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do";
         $post->body = "<p>Lorem ipsum dolor sit amet, consectetur adip</p>";
-        $post->published_at = Carbon::now();
+        $post->iframe = "";
+        $post->published_at = Carbon::now()->format('Y-m-d H:i:s');
         $post->category_id = 2;
         $post->save();
 
-        $post->tags()-attached(Tag::create(['name' => 'Tag 1']));
-        $post->tags()-attached(Tag::create(['name' => 'Tag 3']));
+        $post->tags()->attach(Tag::create(['name' => 'Tag 3']));
 
         $post = new Post;
         $post->title = "Cuarto Post";
         $post->url = str_slug("Cuarto Post");
         $post->excerpt = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do";
         $post->body = "<p>Lorem ipsum dolor sit amet, consectetur adip</p>";
-        $post->published_at = Carbon::now();
+        $post->iframe = "";
+        $post->published_at = Carbon::now()->format('Y-m-d H:i:s');
         $post->category_id = 1;
         $post->save();
 
-        $post->tags()-attached(Tag::create(['name' => 'Tag 1']));
-        $post->tags()-attached(Tag::create(['name' => 'Tag 2']));
-        $post->tags()-attached(Tag::create(['name' => 'Tag 3']));
+        $post->tags()->attach(Tag::create(['name' => 'Tag 4']));
 
         $post = new Post;
         $post->title = "Quinto Post";
         $post->url = str_slug("Quinto Post");
         $post->excerpt = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do";
         $post->body = "<p>Lorem ipsum dolor sit amet, consectetur adip</p>";
-        $post->published_at = Carbon::now();
+        $post->iframe = "";
+        $post->published_at = Carbon::now()->format('Y-m-d H:i:s');
         $post->category_id = 1;
         $post->save();
 
-        $post->tags()-attached(Tag::create(['name' => 'Tag 1']));
-        $post->tags()-attached(Tag::create(['name' => 'Tag 2']));
+        $post->tags()->attach(Tag::create(['name' => 'Tag 5']));
 
         $user= new User;
         $user->name = 'Uno';

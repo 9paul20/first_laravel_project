@@ -279,7 +279,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
   toastr.success('{{ session('flash') }}');
 </script>
 @endif
+@unless(request()->is('admin/posts/*'))
+    @include('admin.posts.create')
+@endunless
 @stack('scripts')
-@include('admin.posts.create')
 </body>
 </html>

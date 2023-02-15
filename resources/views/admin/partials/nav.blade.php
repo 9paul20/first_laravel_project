@@ -22,14 +22,21 @@
           <li class="nav-item">
             <a href="{{ route('admin.posts.index') }}" class="nav-link {{ request()->is('admin/posts') ? 'active' : '' }}">
                 <i class="far fa-eye"></i>
-              <p>All Posts</p>
+              <p>Todos los Posts</p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link" data-toggle="modal" data-target="#modal-xl">
-                <i class="fas fa-pencil-alt"></i>
-              <p>Create Post</p>
-            </a>
+              @if(request()->is('admin/posts/*'))
+                  <a href="{{ route('admin.posts.index', '#create') }}" class="nav-link">
+                      <i class="fas fa-pencil-alt"></i>
+                      <p>Crear Post</p>
+                  </a>
+              @else
+                  <a href="#" class="nav-link" data-toggle="modal" data-target="#modal-xl">
+                      <i class="fas fa-pencil-alt"></i>
+                      <p>Crear Post</p>
+                  </a>
+              @endif
           </li>
         </ul>
       </li>

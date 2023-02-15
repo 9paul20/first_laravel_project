@@ -36,8 +36,8 @@
                 <div class="col-12">
                     <div class="card card-primary card-outline">
                         <div class="card-header">
-                            <h3 class="card-title">DataTable with default features</h3>
-                            <button class="btn btn-primary float-right" data-toggle="modal" data-target="#modal-xl"><i class="fas fa-plus"></i> Crear Post</button>
+                            <h3 class="card-title">DataTable de los Posts</h3>
+                            <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#modal-xl"><i class="fas fa-plus"></i> Crear Post</button>
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
@@ -57,9 +57,15 @@
                                             <td>{{ $post->title }}</td>
                                             <td>{{ $post->excerpt }}</td>
                                             <td>
-                                                <a class="btn btn-xs btn-default"><i class="far fa-eye"></i></a>
-                                                <a class="btn btn-xs btn-info"><i class="far fa-edit"></i></a>
-                                                <a class="btn btn-xs btn-danger"><i class="fas fa-times"></i></a>
+                                                <a href="{{ route('posts.show',$post) }}" class="btn btn-xs btn-default" target="_blank"><i class="far fa-eye"></i></a>
+                                                <a href="{{ route('admin.posts.edit',$post) }}" class="btn btn-xs btn-info"><i class="far fa-edit"></i></a>
+                                                <form method="POST" action="{{ route('admin.posts.destroy', $post) }}" style="display: inline">
+                                                    {{ csrf_field() }} {{ method_field('DELETE') }}
+                                                    <button class="btn btn-xs btn-danger"
+                                                    onclick="return confirm('¿Quieres eliminar la publicación?')">
+                                                        <i class="fas fa-times"></i>
+                                                    </button>
+                                                </form>
                                             </td>
                                         </tr>
                                     @endforeach
