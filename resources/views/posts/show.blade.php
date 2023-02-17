@@ -14,8 +14,9 @@
 
 @section('content')
     <article class="post container">
+        {{--@include($post->viewType()) en caso de querer usar el metodo de Post.php--}}
         @if($post->photos->count() === 1)
-            <figure><img src="{{ url('/storage/'.$post->photos->first()->url) }}" alt="" class="img-responsive"></figure>
+            @include('posts.photo')
         @elseif($post->photos->count() > 1)
                 <div class="card-body">
                     <div id="carouselExampleIndicators" name="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
@@ -46,33 +47,13 @@
                     </div>
                 </div>
         @elseif($post->iframe)
-            <div class="video">
-                <!--                    <iframe width="100%" height="480" src="https://www.youtube.com/embed/Zsqep7_9_mw?rel=0&amp;controls=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>-->
-                {!! $post->iframe !!}
-            </div>
+            @include('posts.iframe')
         @endif
         <div class="content-post">
-            <header class="container-flex space-between">
-                @if(isset($post->published_at))
-                    <div class="date">
-                        <span class="c-gris">{{ $post->published_at->format('M d') }}</span>
-                    </div>
-                @else
-                    <div class="date">
-                        <span class="c-gris">Sin Fecha</span>
-                    </div>
-                @endif
-                @if(isset($post->published_at))
-                        <div class="post-category">
-                            <span class="category">{{ $post->category->name }}</span>
-                        </div>
-                    @else
-                        <div class="post-category">
-                            <span class="category">Sin Categoria</span>
-                        </div>
-                    @endif
-            </header>
-            <h1>{{ $post->title }}</h1>
+
+            @include('posts.header')
+
+            @include('posts.title')
             <div class="divider"></div>
             <div class="image-w-text">
                 <div>
@@ -82,11 +63,7 @@
 
             <footer class="container-flex space-between">
                 @include('partials.social-links')
-                <div class="tags container-flex">
-                    @foreach($post->tags as $tag)
-                        <span class="tag">#{{ $tag->name }}</span>
-                    @endforeach
-                </div>
+                @include('posts.tags')
             </footer>
             @include('partials.disqus-script')
         </div>

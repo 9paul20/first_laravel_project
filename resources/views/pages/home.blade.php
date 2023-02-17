@@ -10,8 +10,9 @@
 
         @foreach($posts as $post)
 		<article class="post">
+            {{--@include($post->viewType('home')) en caso de querer usar el metodo de Post.php--}}
             @if($post->photos->count() === 1)
-                <figure><img src="{{ url('/storage/'.$post->photos->first()->url) }}" alt="" class="img-responsive"></figure>
+                @include('posts.photo')
             @elseif($post->photos->count() > 1)
                 <div class="gallery-photos" data-masonry='{ "itemSelector":".grid-item", "columnWidth":464 }'>
                 @foreach($post->photos->take(4) as $photo)
@@ -25,31 +26,21 @@
                 </div>
             @elseif($post->iframe)
                 <div class="video">
-<!--                    <iframe width="100%" height="480" src="https://www.youtube.com/embed/Zsqep7_9_mw?rel=0&amp;controls=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>-->
-                        {!! $post->iframe !!}
+                    @include('posts.iframe')
                 </div>
             @endif
 			<div class="content-post">
-				<header class="container-flex space-between">
-					<div class="date">
-						<span class="c-gray-1">{{ $post->published_at->format('M d') }}</span>
-					</div>
-					<div class="post-category">
-						<span class="category text-capitalize"><a href="{{ route('categories.show', $post->category) }}">{{ $post->category->name }}</a></span>
-					</div>
-				</header>
-				<h1>{{ $post->title }}</h1>
+
+				@include('posts.header')
+                @include('posts.title')
+
 				<div class="divider"></div>
 				<p>{{ $post->excerpt }}</p>
 				<footer class="container-flex space-between">
 					<div class="read-more">
-						<a href="blog/{{ $post->url }}" class="text-uppercase c-green">Leer Post</a>
+						<a href="{{ route('posts.show', $post) }}" class="text-uppercase c-green">Leer Post</a>
 					</div>
-					<div class="tags container-flex">
-						@foreach($post->tags as $tag)
-                            <span class="tag"><a href="{{ route('tags.show', $tag) }}">#{{ $tag->name }}</a></span>
-                        @endforeach
-					</div>
+					@include('posts.tags')
 				</footer>
 			</div>
 		</article>

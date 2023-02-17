@@ -15,6 +15,7 @@ class Post extends Model
         'excerpt',
         'published_at',
         'category_id',
+        'user_id',
     ];
 
     protected $dates = ['published_at'];
@@ -39,6 +40,10 @@ class Post extends Model
         return $this->hasMany(Photo::class);
     }
 
+    public function owner(){
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
     public function tags(){
         return $this->belongsToMany(Tag::class);
     }
@@ -47,6 +52,10 @@ class Post extends Model
         $query->whereNotNull('published_at')
             ->where('published_at','<=',Carbon::now())
             ->latest('published_at');
+    }
+
+    public function isPublished(){
+        return ! is_null($this->published_at) && $this->published_at < today();
     }
 
     public static function create(array $attributes = []){
@@ -95,4 +104,15 @@ class Post extends Model
         });
         return $this->tags()->sync($tagIds);
     }
+
+    /*public function viewType($home = ''){
+        if($this->photos->count() == 1):
+            return 'posts.photo';
+        elseif ($this->photos->count() > 1) :
+            return $home === 'home' ? 'posts.carrousel-preview': 'posts.carrousel'
+        elseif($this->iframe) :
+            return 'posts.iframe';
+        else:
+            return 'posts.text'; --> en este proyecto es necesario crear las vistas carrousel, el carrousel-preview y text <--
+    }*/
 }

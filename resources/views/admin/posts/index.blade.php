@@ -17,6 +17,13 @@
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item">
+                            {{--<form metod="POST" action="{{ route('logout') }}">
+                                {{ csrf_field() }}
+                                <a type="button" href="{{ route('logout') }}">Cerrar Sesión</a>
+                            </form>--}}
+                            <a href="#" id="logout">Cerrar Session</a>
+                        </li>
                         <li class="breadcrumb-item"><a href="{{ route('admin') }}">Admin</a></li>
                         <li class="breadcrumb-item active"><a href="{{ route('admin.posts.index') }}">Posts</a></li>
                     </ol>

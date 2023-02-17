@@ -47,6 +47,7 @@ class PostsTableSeeder extends Seeder
         $post->iframe = "";
         $post->published_at = Carbon::now()->subDays()->format('Y-m-d H:i:s');
         $post->category_id = 1;
+        $post->user_id = 1;
         $post->save();
 
         $post->tags()->attach(Tag::create(['name' => 'Tag 1']));
@@ -59,6 +60,7 @@ class PostsTableSeeder extends Seeder
         $post->iframe = "";
         $post->published_at = Carbon::now()->subDays(2)->format('Y-m-d H:i:s');
         $post->category_id = 2;
+        $post->user_id = 1;
         $post->save();
 
         $post->tags()->attach(Tag::create(['name' => 'Tag 2']));
@@ -71,6 +73,7 @@ class PostsTableSeeder extends Seeder
         $post->iframe = "";
         $post->published_at = Carbon::now()->format('Y-m-d H:i:s');
         $post->category_id = 2;
+        $post->user_id = 1;
         $post->save();
 
         $post->tags()->attach(Tag::create(['name' => 'Tag 3']));
@@ -83,6 +86,7 @@ class PostsTableSeeder extends Seeder
         $post->iframe = "";
         $post->published_at = Carbon::now()->format('Y-m-d H:i:s');
         $post->category_id = 1;
+        $post->user_id = 2;
         $post->save();
 
         $post->tags()->attach(Tag::create(['name' => 'Tag 4']));
@@ -95,6 +99,7 @@ class PostsTableSeeder extends Seeder
         $post->iframe = "";
         $post->published_at = Carbon::now()->format('Y-m-d H:i:s');
         $post->category_id = 1;
+        $post->user_id = 2;
         $post->save();
 
         $post->tags()->attach(Tag::create(['name' => 'Tag 5']));

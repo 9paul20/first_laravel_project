@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use App\Post;
 use App\Category;
 use App\Tag;
+use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 class PostsController extends Controller
@@ -17,7 +18,7 @@ class PostsController extends Controller
     }
 
     public function index(){
-        $posts = Post::all();
+        $posts = auth()->user()->posts;
         return view('admin.posts.index', compact('posts'));
     }
 
@@ -25,9 +26,10 @@ class PostsController extends Controller
         $this->validate($request,[
             'title'=> 'required|min:3'
         ]);
-        $post = Post::create(
-            $request->only('title')
-        );
+        $post = Post::create([
+            'title' => $request->only('title'),
+            'user_id' => auth()->id(),
+        ]);
         return redirect()->route('admin.posts.edit', $post);
     }
 
@@ -39,9 +41,7 @@ class PostsController extends Controller
 
     public function update(Post $post, StorePostRequest $request){
         $post->update($request->all());
-
         $post->syncTags($request->get('tags'));
-
         return redirect()
             ->route('admin.posts.edit', $post)
             ->with('flash','Tu post se há actualizado');
@@ -49,7 +49,6 @@ class PostsController extends Controller
 
     public function destroy(Post $post){
         $post->delete();
-
         return redirect()
             ->route('admin.posts.index')
             ->with('flash', 'Tu post se há eliminado');
