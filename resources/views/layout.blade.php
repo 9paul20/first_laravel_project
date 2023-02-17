@@ -6,10 +6,10 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 	<meta name="description" content="@yield('meta-description', 'Estás en el blog')">
 	<title>@yield('meta-title', config('app.name')) | Blog</title>
-	<link rel="stylesheet" href="/css/normalize.css">
-	<link rel="stylesheet" href="/css/framework.css">
-	<link rel="stylesheet" href="/css/style.css">
-	<link rel="stylesheet" href="/css/responsive.css">
+	<link rel="stylesheet" href="{{ url('/css/normalize.css') }}">
+	<link rel="stylesheet" href="{{ url('/css/framework.css') }}">
+	<link rel="stylesheet" href="{{ url('/css/style.css') }}">
+	<link rel="stylesheet" href="{{ url('/css/responsive.css') }}">
 	<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
 	<script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
     @stack('styles')
@@ -18,7 +18,7 @@
 	<div class="preload"></div>
 	<header class="space-inter">
 		<div class="container container-flex space-between">
-			<figure class="logo"><img src="/img/logo.png" alt=""></figure>
+			<figure class="logo"><img src="{{ url('/img/logo.png') }}" alt=""></figure>
 			@include('partials.nav')
 		</div>
 	</header>
@@ -29,7 +29,7 @@
     <section class="footer">
 		<footer>
 			<div class="container">
-				<figure class="logo"><img src="/img/logo.png" alt=""></figure>
+				<figure class="logo"><img src="{{ url('/img/logo.png') }}" alt=""></figure>
 				<nav>
 					<ul class="container-flex space-center list-unstyled">
 						<li><a href="{{ route('home') }}" class="text-uppercase c-white">Inicio</a></li>

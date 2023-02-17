@@ -2,16 +2,16 @@
 
 @push('styles')
     <!-- daterange picker -->
-    <link rel="stylesheet" href="/adminlte/plugins/daterangepicker/daterangepicker.css">
+    <link rel="stylesheet" href="{{ url('/adminlte/plugins/daterangepicker/daterangepicker.css') }}">
     <!-- Bootstrap Color Picker -->
-    <link rel="stylesheet" href="/adminlte/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css">
+    <link rel="stylesheet" href="{{ url('/adminlte/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css') }}">
     <!-- Tempusdominus Bootstrap 4 -->
-    <link rel="stylesheet" href="/adminlte/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+    <link rel="stylesheet" href="{{ url('/adminlte/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css') }}">
     <!-- summernote -->
-    <link rel="stylesheet" href="/adminlte/plugins/summernote/summernote-bs4.min.css">
+    <link rel="stylesheet" href="{{ url('/adminlte/plugins/summernote/summernote-bs4.min.css') }}">
     <!-- Select2 -->
-    <link rel="stylesheet" href="/adminlte/plugins/select2/css/select2.min.css">
-    <link rel="stylesheet" href="/adminlte/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+    <link rel="stylesheet" href="{{ url('/adminlte/plugins/select2/css/select2.min.css') }}">
+    <link rel="stylesheet" href="{{ url('/adminlte/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
     <!-- Dropzone-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/dropzone.min.css" integrity="sha512-jU/7UFiaW5UBGODEopEqnbIAHOI8fO6T99m7Tsmqs2gkdujByJfkCbbfPSN4Wlqlb9TGnsuC0YgUgWkRBK7B9A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 @endpush
@@ -162,8 +162,14 @@
                             {{ csrf_field() }}
                             <div class="col-md-1">
                                 <button class="btn btn-danger btn-xs" style="position: absolute"><i class="fas fa-times"></i></button>
-                                <img class="img-responsive" src="/storage/{{ ($photo->url) }}" width="120" height="120">
+                                <img class="img-responsive" src="{{ url('/storage/'.($photo->url)) }}" width="120" height="120">
                             </div>
+                            {{-- Modificar el filesystems remplazando la linea root de disk-local por esta ---->>> 'root' => storage_path('app/public'),
+                            y agregar esta linea en .env ---->>> FILESYSTEM_DRIVER=public
+                            Si no llegara a funcionar correctamente el mostrar las imagenes
+                            Usar los comandos "composer dump-autoload -o" y "php artisan config:clear" 
+                            volver a crear el link con el comando "php artisan storage:link" si es necesario, si ya está creado
+                            se puede eliminar de la carpeta public, la carpeta con el nombre storage--}}
                         </form>
                     @endforeach
                     @endif
@@ -174,18 +180,18 @@
 
         @push('scripts')
             <!-- InputMask -->
-            <script src="/adminlte/plugins/moment/moment.min.js"></script>
-            <script src="/adminlte/plugins/inputmask/jquery.inputmask.min.js"></script>
+            <script src="{{ url('/adminlte/plugins/moment/moment.min.js') }}"></script>
+            <script src="{{ url('/adminlte/plugins/inputmask/jquery.inputmask.min.js') }}"></script>
             <!-- Tempusdominus Bootstrap 4 -->
-            <script src="/adminlte/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+            <script src="{{ url('/adminlte/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js') }}"></script>
             <!-- date-range-picker -->
-            <script src="/adminlte/plugins/daterangepicker/daterangepicker.js"></script>
+            <script src="{{ url('/adminlte/plugins/daterangepicker/daterangepicker.js') }}"></script>
             <!-- bootstrap color picker -->
-            <script src="/adminlte/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js"></script>
+            <script src="{{ url('/adminlte/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js') }}"></script>
             <!-- Summernote -->
-            <script src="/adminlte/plugins/summernote/summernote-bs4.min.js"></script>
+            <script src="{{ url('/adminlte/plugins/summernote/summernote-bs4.min.js') }}"></script>
             <!-- Select2 -->
-            <script src="/adminlte/plugins/select2/js/select2.full.min.js"></script>
+            <script src="{{ url('/adminlte/plugins/select2/js/select2.full.min.js') }}"></script>
             <!--Dropzone-->
             <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/dropzone.min.js" integrity="sha512-U2WE1ktpMTuRBPoCFDzomoIorbOyUv0sP8B+INA3EzNAhehbzED1rOJg6bCqPf/Tuposxb5ja/MAUnC8THSbLQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
@@ -231,7 +237,7 @@
                     });
                 });
                 var myDropzone = new Dropzone('.dropzone',{
-                    url: '/admin/posts/{{ $post->url }}/photos',
+                    url: '{{ url('/admin/posts/'.$post->url.'/photos') }}',
                     acceptedFiles: 'image/*',
                     maxFilesize: 2,
                     paramName: 'photo',

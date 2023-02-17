@@ -4,9 +4,9 @@
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome Icons -->
-    <link rel="stylesheet" href="/adminlte/plugins/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" href="{{ url('/adminlte/plugins/fontawesome-free/css/all.min.css') }}">
     <!-- Theme style -->
-    <link rel="stylesheet" href="/adminlte/css/adminlte.min.css">
+    <link rel="stylesheet" href="{{ url('/adminlte/css/adminlte.min.css') }}">
 @endpush
 
 @section('meta-title', $post->title)
@@ -15,7 +15,7 @@
 @section('content')
     <article class="post container">
         @if($post->photos->count() === 1)
-            <figure><img src="/storage/{{ $post->photos->first()->url }}" alt="" class="img-responsive"></figure>
+            <figure><img src="{{ url('/storage/'.$post->photos->first()->url) }}" alt="" class="img-responsive"></figure>
         @elseif($post->photos->count() > 1)
                 <div class="card-body">
                     <div id="carouselExampleIndicators" name="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
@@ -27,7 +27,7 @@
                         <div class="carousel-inner">
                         @foreach($post->photos as $photo)
                             <div class="carousel-item {{ $loop->first ? 'active' : '' }}">
-                                <img class="d-block w-100" src="/storage/{{ $photo->url }}" alt="">
+                                <img class="d-block w-100" src="{{ url('/storage/'.$photo->url) }}" alt="">
                             </div>
                         @endforeach
                         </div>
@@ -95,11 +95,11 @@
 
 @push('scripts')
     <!-- jQuery -->
-    <script src="/adminlte/plugins/jquery/jquery.min.js"></script>
+    <script src="{{ url('/adminlte/plugins/jquery/jquery.min.js') }}"></script>
     <!-- Bootstrap 4 -->
-    <script src="/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url('/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <!-- AdminLTE App -->
-    <script src="/adminlte/js/adminlte.min.js"></script>
+    <script src="{{ url('/adminlte/js/adminlte.min.js') }}"></script>
     <!-- Zendero -->
     <script id="dsq-count-scr" src="//zendero.disqus.com/count.js" async></script>
 @endpush
