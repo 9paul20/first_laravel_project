@@ -1,6 +1,4 @@
 <?php
-function setActiveRout($name){
+function setActiveRoute($name){
     return request()->routeIs($name) ? 'active' : '';
 }
-
-?>

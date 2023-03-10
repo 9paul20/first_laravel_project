@@ -18,25 +18,26 @@ class PostsController extends Controller
     }
 
     public function index(){
-        $posts = auth()->user()->posts;
+        $posts = Post::allowed()->get();
         return view('admin.posts.index', compact('posts'));
     }
 
     public function store(Request $request){
+        $this->authorize('create', new Post);
         $this->validate($request,[
             'title'=> 'required|min:3'
         ]);
-        $post = Post::create([
-            'title' => $request->only('title'),
-            'user_id' => auth()->id(),
-        ]);
+        $post = Post::create($request->all());
         return redirect()->route('admin.posts.edit', $post);
     }
 
     function edit(Post $post){
-        $categories = Category::all();
-        $tags = Tag::all();
-        return view('admin.posts.edit', compact('categories','tags', 'post'));
+        $this->authorize('update', $post);
+        return view('admin.posts.edit', [
+            'categories' => Category::all(),
+            'tags' => Tag::all(),
+            'post' => $post
+        ]);
     }
 
     public function update(Post $post, StorePostRequest $request){
@@ -48,6 +49,7 @@ class PostsController extends Controller
     }
 
     public function destroy(Post $post){
+        $this->authorize('delete', $post);
         $post->delete();
         return redirect()
             ->route('admin.posts.index')

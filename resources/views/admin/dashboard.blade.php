@@ -10,6 +10,14 @@
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item">
+                            <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                Cerrar Sesión
+                            </a>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                @csrf
+                            </form>
+                        </li>
                         <li class="breadcrumb-item"><a href="{{ route('admin') }}">Admin</a></li>
                         <li class="breadcrumb-item active"><a href="{{ route('admin.posts.index') }}">Posts</a></li>
                     </ol>
@@ -22,5 +30,6 @@
 
 @section ('content')
     <h1>Dashboard</h1>
-    <p>{{ auth()->user()->name }}</p>
+    <p>{{ auth()->user()->name ?? '' }} - {{ auth()->user()->getRoleDisplayName() }}</p>
 @endsection
+

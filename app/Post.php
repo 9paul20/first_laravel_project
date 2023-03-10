@@ -59,6 +59,7 @@ class Post extends Model
     }
 
     public static function create(array $attributes = []){
+        $attributes['user_id'] = auth()->id();
         $post = static ::query()->create($attributes);
         $post -> generateUrl();
         return $post;
@@ -103,6 +104,13 @@ class Post extends Model
                 : Tag::create(['name' => $tag])->id;
         });
         return $this->tags()->sync($tagIds);
+    }
+
+    public function scopeAllowed($query){
+        if(auth()->user()->can('view', $this)){
+            return $query;
+        }
+        return $query->where('user_id', auth()->id());
     }
 
     /*public function viewType($home = ''){
