@@ -51,7 +51,7 @@ class PermissionPolicy
      * @param  \Spatie\Permission\Model\Permission  $permission
      * @return mixed
      */
-    public function update(User $user, Permission $permission)
+    public function update(User $user)
     {
         return $user->hasRole('Admin') || $user->hasPermissionTo('Update Permissions');
     }

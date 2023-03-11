@@ -46,7 +46,10 @@
                     <div class="card card-primary card-outline">
                         <div class="card-header">
                             <h3 class="card-title">DataTable de los Roles</h3>
-                            <a href="{{ route('admin.roles.create') }}" type="button" class="btn btn-primary float-right" ><i class="fas fa-plus"></i> Crear Rol</a>
+                            @can('create', Spatie\Permission\Models\Role::class)
+                                <a href="{{ route('admin.roles.create') }}" type="button" class="btn btn-primary float-right">
+                                    <i class="fas fa-plus"></i> Crear Rol</a>
+                            @endcan
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
@@ -70,17 +73,21 @@
                                             <td>
                                                 {{-- <a href="{{ route('admin.roles.show', $role) }}"
                                                     class="btn btn-xs btn-default"><i class="far fa-eye"></i></a> --}}
-                                                <a href="{{ route('admin.roles.edit', $role) }}"
-                                                    class="btn btn-xs btn-info"><i class="far fa-edit"></i></a>
-                                                @if($role->id !== 1)
-                                                    <form method="POST" action="{{ route('admin.roles.destroy', $role) }}"
-                                                        style="display: inline">
-                                                        {{ csrf_field() }} {{ method_field('DELETE') }}
-                                                        <button class="btn btn-xs btn-danger"
-                                                            onclick="return confirm('¿Quieres eliminar el Rol?')">
-                                                            <i class="fas fa-times"></i>
-                                                        </button>
-                                                    </form>
+                                                @can('update', $role)
+                                                    <a href="{{ route('admin.roles.edit', $role) }}"
+                                                        class="btn btn-xs btn-info"><i class="far fa-edit"></i></a>
+                                                @endcan
+                                                @if ($role->id !== 1)
+                                                    @can('delete', $role)
+                                                        <form method="POST" action="{{ route('admin.roles.destroy', $role) }}"
+                                                            style="display: inline">
+                                                            {{ csrf_field() }} {{ method_field('DELETE') }}
+                                                            <button class="btn btn-xs btn-danger"
+                                                                onclick="return confirm('¿Quieres eliminar el Rol?')">
+                                                                <i class="fas fa-times"></i>
+                                                            </button>
+                                                        </form>
+                                                    @endcan
                                                 @endif
                                             </td>
                                         </tr>
@@ -127,16 +134,28 @@
     <script>
         $(function() {
             //Tables
-            $('#post-table').DataTable({
-                "paging": true,
-                "lengthChange": true,
-                "searching": true,
-                "ordering": true,
-                "info": true,
-                "autoWidth": false,
-                "responsive": true,
-                "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-            }).buttons().container().appendTo('#post-table_wrapper .col-md-6:eq(0)');
+            @can('create', Spatie\Permission\Models\Role::class)
+                $('#post-table').DataTable({
+                    "paging": true,
+                    "lengthChange": true,
+                    "searching": true,
+                    "ordering": true,
+                    "info": true,
+                    "autoWidth": false,
+                    "responsive": true,
+                    "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+                }).buttons().container().appendTo('#post-table_wrapper .col-md-6:eq(0)');
+            @else
+                $('#post-table').DataTable({
+                    "paging": true,
+                    "lengthChange": true,
+                    "searching": true,
+                    "ordering": true,
+                    "info": true,
+                    "autoWidth": false,
+                    "responsive": true
+                }).buttons().container().appendTo('#post-table_wrapper .col-md-6:eq(0)');
+            @endcan
         });
     </script>
 @endpush

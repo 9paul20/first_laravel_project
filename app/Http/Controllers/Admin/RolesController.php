@@ -24,16 +24,20 @@ class RolesController extends Controller
         // } else {
         //     abort(403, 'No tienes permisos para acceder a esta página.');
         // }
-        $user = Auth::user();
-        $roleClass = Role::class;
-        $roles = Role::all();
+        // $user = Auth::user();
+        // $roleClass = Role::class;
+        // $roles = Role::all();
         //TODO: La comprobación del IF es solamente para no usar las clases de SaveRoles y RolePolicy, no es necesario aplicarlo en caso de tener las politicas y request reestructuradas, ya que estaría validando de dos a tres veces la autentificación
-        if ($this->authorize('view', $user, $roleClass)->allowed()) {
-            return view('admin.roles.index', compact('roles'));
-        } else {
+        // if ($this->authorize('view', $user, $roleClass)->allowed()) {
+        //     return view('admin.roles.index', compact('roles'));
+        // } else {
 
-            abort(403, 'No tienes permisos para acceder a esta página.');
-        }
+        //     abort(403, 'No tienes permisos para acceder a esta página.');
+        // }
+        $roles = Role::all();
+        $role = Role::class;
+        $this->authorize('view', $role);
+        return view('admin.roles.index', compact('roles'));
     }
 
     /**

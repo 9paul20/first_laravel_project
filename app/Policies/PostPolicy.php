@@ -16,15 +16,17 @@ class PostPolicy
      * @param  \App\User  $user
      * @return mixed
      */
-    public function before(User $user){
-        if($user->hasRole('Admin')){
+    public function before(User $user)
+    {
+        if ($user->hasRole('Admin')) {
             return true;
         }
     }
 
-    public function viewAny(User $user)
+    public function viewAny(User $user, Post $post)
     {
-        //
+        return $user->id === $post->user_id
+            || $user->hasPermissionTo('View Posts');
     }
 
     /**
@@ -50,7 +52,6 @@ class PostPolicy
     {
         return $user->hasPermissionTo('Create Posts');
     }
-
     /**
      * Determine whether the user can update the model.
      *
@@ -61,7 +62,7 @@ class PostPolicy
     public function update(User $user, Post $post)
     {
         return $user->id === $post->user_id
-        ||  $user->hasPermissionTo('View Posts');
+            ||  $user->hasPermissionTo('Update Posts');
     }
 
     /**
@@ -74,7 +75,7 @@ class PostPolicy
     public function delete(User $user, Post $post)
     {
         return $user->id === $post->user_id
-        || $user->hasPermissionTo('Delete Posts');;
+            || $user->hasPermissionTo('Delete Posts');
     }
 
     /**

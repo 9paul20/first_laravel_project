@@ -20,6 +20,8 @@ class UsersController extends Controller
     public function index()
     {
         $users = User::allowed()->get();
+        $user = User::class;
+        $this->authorize('view', $user);
         return view('admin.users.index', compact('users'));
     }
 
@@ -31,10 +33,10 @@ class UsersController extends Controller
     public function create()
     {
         $user = new User;
-        $this->authorize('update',$user);
+        $this->authorize('create', $user);
         $roles = Role::with('permissions')->get();
-        $permissions = Permission::pluck('name','id');
-        return view('admin.users.create', compact('user', 'roles','permissions'));
+        $permissions = Permission::pluck('name', 'id');
+        return view('admin.users.create', compact('user', 'roles', 'permissions'));
     }
 
     /**
@@ -61,12 +63,12 @@ class UsersController extends Controller
         $user = User::create($data);
 
         //*Asignar Roles
-        if($request->filled('roles')){
+        if ($request->filled('roles')) {
             $user->assignRole($request->roles);
         }
 
         //*Asignar Permisos
-        if($request->filled('permissions')){
+        if ($request->filled('permissions')) {
             $user->givePermissionTo($request->permissions);
         }
 
@@ -85,7 +87,7 @@ class UsersController extends Controller
      */
     public function show(User $user)
     {
-        $this->authorize('view',$user);
+        $this->authorize('show', $user);
         return view('admin.users.show', compact('user'));
     }
 
@@ -97,10 +99,10 @@ class UsersController extends Controller
      */
     public function edit(User $user)
     {
-        $this->authorize('update',$user);
+        $this->authorize('update', $user);
         $roles = Role::with('permissions')->get();
-        $permissions = Permission::pluck('name','id');
-        return view('admin.users.edit', compact('user', 'roles','permissions'));
+        $permissions = Permission::pluck('name', 'id');
+        return view('admin.users.edit', compact('user', 'roles', 'permissions'));
     }
 
     /**
@@ -114,7 +116,7 @@ class UsersController extends Controller
     {
         $this->authorize('update', $user);
         $user->update($request->validated());
-        return redirect()->route('admin.users.edit', $user)->withFlash('Usuario Actualizado');
+        return redirect()->route('admin.users.show', $user)->withFlash('Usuario Actualizado');
     }
 
     /**

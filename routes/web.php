@@ -51,12 +51,29 @@ Route::group(
         Route::resource('roles', 'RolesController', ['except' => 'show', 'as' => 'admin']);
         Route::resource('permissions', 'PermissionsController', ['only' => ['index', 'create', 'store', 'edit', 'update', 'destroy'], 'as' => 'admin']);
 
-        Route::middleware('role:Admin')
-            ->put('users/{user}/roles', 'UsersRolesController@update')
+        Route::middleware(['auth', function ($request, $next) {
+            // dd($request->user()->can('Update Users'));
+            // dd($request->user()->hasRole('Admin'));
+            if (!$request->user()->can('Update Users') && !$request->user()->hasRole('Admin')) {
+                abort(403, 'No Tiene Permisos Para Actualizar Roles');
+            }
+            return $next($request);
+        }])->put('users/{user}/roles', 'UsersRolesController@update')
             ->name('admin.users.roles.update');
-        Route::middleware('role:Admin')
-            ->put('users/{user}/permissions', 'UsersPermissionsController@update')
+        Route::middleware(['auth', function ($request, $next) {
+            if (!$request->user()->can('Update Users') && !$request->user()->hasRole('Admin')) {
+                abort(403, 'No Tiene Permisos Para Actualizar Permisos');
+            }
+            return $next($request);
+        }])->put('users/{user}/permissions', 'UsersPermissionsController@update')
             ->name('admin.users.permissions.update');
+
+        // Route::middleware('role:Admin')
+        //     ->put('users/{user}/roles', 'UsersRolesController@update')
+        //     ->name('admin.users.roles.update');
+        // Route::middleware('role:Admin')
+        //     ->put('users/{user}/permissions', 'UsersPermissionsController@update')
+        //     ->name('admin.users.permissions.update');
         // Route::get('posts', 'PostsController@index')->name('admin.posts.index');
         // Route::get('posts/create', 'PostsController@create')->name('admin.posts.create');
         // Route::post('posts/store', 'PostsController@store')->name('admin.posts.store');

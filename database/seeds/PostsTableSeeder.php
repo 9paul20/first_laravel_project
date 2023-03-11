@@ -115,10 +115,10 @@ class PostsTableSeeder extends Seeder
         $UPpermission = Permission::create(['name' => 'Update Posts', 'display_name' => 'Actualizar Posts']);
         $DPpermission = Permission::create(['name' => 'Delete Posts', 'display_name' => 'Eliminar Posts']);
 
-        $CUpermission = Permission::create(['name' => 'Create User', 'display_name' => 'Crear Usuarios']);
-        $VUpermission = Permission::create(['name' => 'View User', 'display_name' => 'Ver Usuarios']);
-        $UUpermission = Permission::create(['name' => 'Update User', 'display_name' => 'Actualizar Usuarios']);
-        $DUpermission = Permission::create(['name' => 'Delete User', 'display_name' => 'Eliminar Usuarios']);
+        $CUpermission = Permission::create(['name' => 'Create Users', 'display_name' => 'Crear Usuarios']);
+        $VUpermission = Permission::create(['name' => 'View Users', 'display_name' => 'Ver Usuarios']);
+        $UUpermission = Permission::create(['name' => 'Update Users', 'display_name' => 'Actualizar Usuarios']);
+        $DUpermission = Permission::create(['name' => 'Delete Users', 'display_name' => 'Eliminar Usuarios']);
 
         $CRpermission = Permission::create(['name' => 'Create Roles', 'display_name' => 'Crear Roles']);
         $URpermission = Permission::create(['name' => 'Update Roles', 'display_name' => 'Ver Roles']);
@@ -161,9 +161,6 @@ class PostsTableSeeder extends Seeder
         $role = Role::create(['name' => 'Writer', 'display_name' => 'Escritor']);
 
         $role->givePermissionTo($CPpermission);
-        $role->givePermissionTo($VPpermission);
-        $role->givePermissionTo($UPpermission);
-        $role->givePermissionTo($DPpermission);
 
         $user = new User;
         $user->name = 'John Doe';

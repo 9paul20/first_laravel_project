@@ -71,7 +71,7 @@ class UsersPermissionsController extends Controller
     public function update(Request $request, User $user)
     {
         $user->permissions()->detach();
-        if($request->filled('permissions')){
+        if ($request->filled('permissions')) {
             $user->givePermissionTo($request->permissions);
         }
         return back()->withFlash('Los Permisos Se Han Actualizado');

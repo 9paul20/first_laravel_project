@@ -23,8 +23,9 @@
                             <b>Publicaciones</b> <a class="float-right">{{ $user->posts->count() }}</a>
                         </li>
                     </ul>
-
-                    <a href="{{ route('admin.users.edit', $user) }}" class="btn btn-primary btn-block"><b>Editar</b></a>
+                    @can('update', $user)
+                        <a href="{{ route('admin.users.edit', $user) }}" class="btn btn-primary btn-block"><b>Editar</b></a>
+                    @endcan
                 </div>
             </div>
         </div>

@@ -18,7 +18,8 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item">
-                            <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            <a href="{{ route('logout') }}"
+                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                 Cerrar Sesión
                             </a>
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
@@ -35,7 +36,7 @@
     <!-- /.content-header -->
 @endsection
 
-@section ('content')
+@section('content')
     <h1>Posts</h1>
     <p>{{ auth()->user()->name }}</p>
     <section class="content">
@@ -45,18 +46,21 @@
                     <div class="card card-primary card-outline">
                         <div class="card-header">
                             <h3 class="card-title">DataTable de los Posts</h3>
-                            <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#modal-xl"><i class="fas fa-plus"></i> Crear Post</button>
+                            @can('create', new App\Post())
+                                <button type="button" class="btn btn-primary float-right" data-toggle="modal"
+                                    data-target="#modal-xl"><i class="fas fa-plus"></i> Crear Post</button>
+                            @endcan
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
                             <table id="post-table" class="table table-bordered table-striped">
                                 <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Titulo</th>
-                                    <th>Extracto</th>
-                                    <th>Acciones</th>
-                                </tr>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Titulo</th>
+                                        <th>Extracto</th>
+                                        <th>Acciones</th>
+                                    </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($posts as $post)
@@ -65,12 +69,15 @@
                                             <td>{{ $post->title }}</td>
                                             <td>{{ $post->excerpt }}</td>
                                             <td>
-                                                <a href="{{ route('posts.show',$post) }}" class="btn btn-xs btn-default" target="_blank"><i class="far fa-eye"></i></a>
-                                                <a href="{{ route('admin.posts.edit',$post) }}" class="btn btn-xs btn-info"><i class="far fa-edit"></i></a>
-                                                <form method="POST" action="{{ route('admin.posts.destroy', $post) }}" style="display: inline">
+                                                <a href="{{ route('posts.show', $post) }}" class="btn btn-xs btn-default"
+                                                    target="_blank"><i class="far fa-eye"></i></a>
+                                                <a href="{{ route('admin.posts.edit', $post) }}"
+                                                    class="btn btn-xs btn-info"><i class="far fa-edit"></i></a>
+                                                <form method="POST" action="{{ route('admin.posts.destroy', $post) }}"
+                                                    style="display: inline">
                                                     {{ csrf_field() }} {{ method_field('DELETE') }}
                                                     <button class="btn btn-xs btn-danger"
-                                                    onclick="return confirm('¿Quieres eliminar la publicación?')">
+                                                        onclick="return confirm('¿Quieres eliminar la publicación?')">
                                                         <i class="fas fa-times"></i>
                                                     </button>
                                                 </form>
@@ -79,12 +86,12 @@
                                     @endforeach
                                 </tbody>
                                 <tfoot>
-                                <tr>
-                                    <th>Por Identificador</th>
-                                    <th>Por Titulo</th>
-                                    <th>Resumen</th>
-                                    <th>Que hacer</th>
-                                </tr>
+                                    <tr>
+                                        <th>Por Identificador</th>
+                                        <th>Por Titulo</th>
+                                        <th>Resumen</th>
+                                        <th>Que hacer</th>
+                                    </tr>
                                 </tfoot>
                             </table>
                         </div>
@@ -102,7 +109,6 @@
 @endsection
 
 @push('scripts')
-
     <!-- DataTables  & Plugins -->
     <script src="{{ url('/adminlte/plugins/datatables/jquery.dataTables.min.js') }}"></script>
     <script src="{{ url('/adminlte/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
@@ -117,7 +123,7 @@
     <script src="{{ url('/adminlte/plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
     <script src="{{ url('/adminlte/plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
     <script>
-        $(function () {
+        $(function() {
             //Tables
             $('#post-table').DataTable({
                 "paging": true,

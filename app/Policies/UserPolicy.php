@@ -9,8 +9,9 @@ class UserPolicy
 {
     use HandlesAuthorization;
 
-    public function before($user){
-        if($user->hasRole('Admin')){
+    public function before($user)
+    {
+        if ($user->hasRole('Admin')) {
             return true;
         }
     }
@@ -23,7 +24,7 @@ class UserPolicy
      */
     public function viewAny(User $authUser, User $user)
     {
-        return $authUser->id === $user->id || $authUser->hasPermissionTo('View Users');
+        //
     }
 
     /**
@@ -33,9 +34,9 @@ class UserPolicy
      * @param  \App\User  $model
      * @return mixed
      */
-    public function view(User $user, User $model)
+    public function view(User $authUser)
     {
-        //
+        return $authUser->hasPermissionTo('View Users');
     }
 
     /**
@@ -46,7 +47,12 @@ class UserPolicy
      */
     public function create(User $user)
     {
-        return $user->hasPermissionTo('Create User');
+        return $user->hasPermissionTo('Create Users');
+    }
+
+    public function show(User $authUser, User $user)
+    {
+        return $authUser->id === $user->id || $authUser->hasPermissionTo('View Users');
     }
 
     /**
@@ -58,7 +64,12 @@ class UserPolicy
      */
     public function update(User $authUser, User $user)
     {
-        return $authUser->id === $user->id || $authUser->hasPermissionTo('Update User');
+        return $authUser->id === $user->id || $authUser->hasPermissionTo('Update Users');
+    }
+
+    public function updateUsersForRolesPermissions(User $authUser)
+    {
+        return $authUser->hasPermissionTo('Update Users');
     }
 
     /**
@@ -70,7 +81,7 @@ class UserPolicy
      */
     public function delete(User $authUser, User $user)
     {
-        return $authUser->id === $user->id || $authUser->hasPermissionTo('Delete User');
+        return $authUser->id === $user->id || $authUser->hasPermissionTo('Delete Users');
     }
 
     /**

@@ -28,7 +28,7 @@ class RolePolicy
      * @param  \App\Role  $role
      * @return mixed
      */
-    public function view(User $user, Role $role)
+    public function view(User $user)
     {
         return $user->hasRole('Admin') || $user->hasPermissionTo('View Roles');
     }

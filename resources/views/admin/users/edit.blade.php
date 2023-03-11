@@ -34,18 +34,19 @@
                 </form>
             </div>
         </div>
-        @role('Admin')
+        @can('updateUsersForRolesPermissions', $user)
+            {{-- @role('Admin') --}}
             <div class="card card-primary card-outline">
                 <div class="box-header card-header">
                     <h3>Roles</h3>
                 </div>
                 <div class="card-body">
                     <div class="form-group">
-                    <form method="POST" action="{{ route('admin.users.roles.update', $user) }}">
-                        {{ csrf_field() }}{{ method_field('PUT') }}
-                        @include('admin.users.roles.checkboxes')
-                        <button class="btn btn-primary btn-block">Guardar Cambios</button>
-                    </form>
+                        <form method="POST" action="{{ route('admin.users.roles.update', $user) }}">
+                            {{ csrf_field() }}{{ method_field('PUT') }}
+                            @include('admin.users.roles.checkboxes')
+                            <button class="btn btn-primary btn-block">Guardar Cambios</button>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -62,33 +63,34 @@
                 </div>
             </div>
         @else
-        <div class="card card-primary card-outline">
-            <div class="box-header card-header">
-                <h3>Roles</h3>
+            <div class="card card-primary card-outline">
+                <div class="box-header card-header">
+                    <h3>Roles</h3>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group">
+                        @forelse ($user->roles as $role)
+                            <li class="list-group-item">{{ $role->name }}</li>
+                        @empty
+                            <li class="list-group-item">No Tiene Roles</li>
+                        @endforelse
+                    </ul>
+                </div>
             </div>
-            <div class="card-body">
-                <ul class="list-group">
-                    @forelse ($user->roles as $role)
-                        <li class="list-group-item">{{ $role->name }}</li>
-                    @empty
-                        <li class="list-group-item">No Tiene Roles</li>
-                    @endforelse
-                </ul>
+            <div class="card card-primary card-outline">
+                <div class="box-header card-header">
+                    <h3>Permisos</h3>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group">
+                        @forelse ($user->permissions as $permission)
+                            <li class="list-group-item">{{ $permission->name }}</li>
+                        @empty
+                            <li class="list-group-item">No Tiene Permisos</li>
+                        @endforelse
+                    </ul>
+                </div>
             </div>
-        </div>
-        <div class="card card-primary card-outline">
-            <div class="box-header card-header">
-                <h3>Permisos</h3>
-            </div>
-            <div class="card-body">
-                <ul class="list-group">
-                    @forelse ($user->permissions as $permission)
-                        <li class="list-group-item">{{ $permission->name }}</li>
-                    @empty
-                        <li class="list-group-item">No Tiene Permisos</li>
-                    @endforelse
-                </ul>
-            </div>
-        </div>
-        @endrole
+            {{-- @endrole --}}
+        @endcan
     @endsection
