@@ -34,6 +34,8 @@ class RolesController extends Controller
 
         //     abort(403, 'No tienes permisos para acceder a esta página.');
         // }
+        //TODO: una manera de optimizar las consultas de los cruds puede ser haciendo peticion de los select exactos a usar, ejemplo de los roles sería (id,name,name_display) y realizarle un paginado, en este caso no es necesario por el framework de Adminlte que ya realiza el paginado por si solo
+        //$roles = Role::select('id', 'name', 'name_display')->paginate(10);
         $roles = Role::all();
         $role = Role::class;
         $this->authorize('view', $role);

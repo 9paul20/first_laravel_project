@@ -7,10 +7,11 @@ use Illuminate\Http\Request;
 
 class CategoriesController extends Controller
 {
-    public function show(Category $category){
+    public function show(Category $category)
+    {
         return view('pages.home', [
             'title' => "Publicaciones de la categoria $category->name",
-            'posts' => $category->posts()->paginate(10)
+            'posts' => $category->posts()->published()->paginate(10)
         ]);
     }
 }
