@@ -9,6 +9,10 @@ use Illuminate\Http\Request;
 
 class PagesController extends Controller
 {
+    public function spa(){
+        return view('pages.spa');
+    }
+
     public function home()
     {
         //TODO: se pueden pregargar las consultas, lo que hacemos aqui es simplemente relacionar las consultas de la base de datos a pocas peticiones, ya que dependiendo de los objetos y referencias que llame el metodo, son consultas independientes, por lo que se reducen notoriamente y la optimización es notoria.
