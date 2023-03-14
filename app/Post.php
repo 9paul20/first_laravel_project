@@ -21,6 +21,8 @@ class Post extends Model
 
     protected $dates = ['published_at'];
 
+    protected $appends = ['published_date'];
+
     protected static function boot()
     {
         parent::boot();
@@ -78,6 +80,10 @@ class Post extends Model
     public function isPublished()
     {
         return !is_null($this->published_at) && $this->published_at < today();
+    }
+
+    public function getPublishedDateAttribute(){
+        return optional($this->published_at)->format('M d');
     }
 
     public static function create(array $attributes = [])

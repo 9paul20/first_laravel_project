@@ -9,6 +9,10 @@ use Illuminate\Http\Request;
 
 class PagesController extends Controller
 {
+    public function spa(){
+        return view('pages.spa');
+    }
+
     public function home()
     {
         //TODO: se pueden pregargar las consultas, lo que hacemos aqui es simplemente relacionar las consultas de la base de datos a pocas peticiones, ya que dependiendo de los objetos y referencias que llame el metodo, son consultas independientes, por lo que se reducen notoriamente y la optimización es notoria.
@@ -22,6 +26,10 @@ class PagesController extends Controller
             $query->whereYear('published_at', request('year'));
         }
         $posts = $query->paginate(10);
+
+        if(request()->wantsJson()){
+            return $posts;
+        }
         // $posts = Post::published()->paginate(10);
         return view('pages.home', compact('posts'));
     }

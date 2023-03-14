@@ -15,6 +15,8 @@
     @stack('styles')
 </head>
 <body>
+
+	<div id="app">
 	<div class="preload"></div>
 	<header class="space-inter">
 		<div class="container container-flex space-between">
@@ -51,6 +53,10 @@
 			</div>
 		</footer>
 	</section>
+
+	</div>
+	
+	<script src="{{ mix('js/app.js') }}"></script>
 
     @stack('scripts')
 
