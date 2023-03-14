@@ -9,9 +9,13 @@ class CategoriesController extends Controller
 {
     public function show(Category $category)
     {
+        $posts = $category->posts()->published()->paginate(10);
+        if (request()->wantsJson()) {
+            return $posts;
+        }
         return view('pages.home', [
             'title' => "Publicaciones de la categoria $category->name",
-            'posts' => $category->posts()->published()->paginate(10)
+            'posts' => $posts
         ]);
     }
 }

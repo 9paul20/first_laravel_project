@@ -9,7 +9,8 @@ use Illuminate\Http\Request;
 
 class PagesController extends Controller
 {
-    public function spa(){
+    public function spa()
+    {
         return view('pages.spa');
     }
 
@@ -27,7 +28,7 @@ class PagesController extends Controller
         }
         $posts = $query->paginate(10);
 
-        if(request()->wantsJson()){
+        if (request()->wantsJson()) {
             return $posts;
         }
         // $posts = Post::published()->paginate(10);

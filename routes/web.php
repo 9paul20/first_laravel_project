@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 // Route::get('email', function(){
 //     return new App\Mail\LoginCredentials(App\User::first(), 'asd123');
 // });
-Route::get('/', 'PagesController@home')->name('home');
+// Route::get('/', 'PagesController@home')->name('home');
 Route::get('/', 'PagesController@spa')->name('home');
 Route::get('nosotros', 'PagesController@about')->name('about');
 Route::get('archivo', 'PagesController@archive')->name('archive');
