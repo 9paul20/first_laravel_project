@@ -28,7 +28,13 @@
             </div>
         </header>
 
-        <router-view :key="$route.fullPath"></router-view>
+        <div class="container">
+            <div style="min-height: 100vh">
+                <transition name="slide-fade" mode="out-in">
+                    <router-view :key="$route.fullPath"></router-view>
+                </transition>
+            </div>
+        </div>
 
         {{-- {{ $posts->appends(request()->all())->links() }} --}}
 
@@ -38,10 +44,10 @@
                     <figure class="logo"><img src="{{ url('/img/logo.png') }}" alt=""></figure>
                     <nav>
                         <ul class="container-flex space-center list-unstyled">
-                            <li><a href="{{ route('home') }}" class="text-uppercase c-white">Inicio</a></li>
-                            <li><a href="{{ route('about') }}" class="text-uppercase c-white">Nosotros</a></li>
-                            <li><a href="{{ route('archive') }}" class="text-uppercase c-white">Archivo</a></li>
-                            <li><a href="{{ route('contact') }}" class="text-uppercase c-white">Contacto</a></li>
+                            {{-- <li><a href="{{ route('home') }}" class="text-uppercase c-white">Inicio</a></li> --}}
+                            {{-- <li><a href="{{ route('About') }}" class="text-uppercase c-white">Nosotros</a></li>
+                            <li><a href="{{ route('Archive') }}" class="text-uppercase c-white">Archivo</a></li>
+                            <li><a href="{{ route('Contact') }}" class="text-uppercase c-white">Contacto</a></li> --}}
                         </ul>
                     </nav>
                     <div class="divider-2"></div>

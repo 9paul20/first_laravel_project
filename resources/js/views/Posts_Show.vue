@@ -24,6 +24,7 @@
                     @include('posts.tags') -->
             </footer>
             <!-- @include('partials.disqus-script') -->
+            <social-links :description="post.title"></social-links>
         </div>
         <disqus-comments></disqus-comments>
     </article>
