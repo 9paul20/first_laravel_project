@@ -33,13 +33,13 @@ let router = new Router({
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component("post-list", require("./components/PostList.vue").default);
-Vue.component(
-    "post-list-item",
-    require("./components/PostListItem.vue").default
-);
+Vue.component("post-list-item",require("./components/PostListItem.vue").default);
 Vue.component("post-header", require("./components/PostHeader.vue").default);
 Vue.component("navigation", require("./components/Navigation.vue").default);
 Vue.component("tag-header", require("./components/TagHeader.vue").default);
+Vue.component("category-link", require("./components/CategoryLink.vue").default);
+Vue.component("post-link", require("./components/PostLink.vue").default);
+Vue.component("disqus-comments", require("./components/DisqusComments.vue").default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

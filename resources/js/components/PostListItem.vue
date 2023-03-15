@@ -7,8 +7,7 @@
         <footer class="container-flex space-between">
             <div class="read-more">
                 <!-- <a :href="`/blog/${post.url}`" class="text-uppercase c-green">Leer Post</a> -->
-                <router-link :to="{ name: 'Posts_Show', params: { url: post.url } }" class="text-uppercase c-green">Leer
-                    Post</router-link>
+                <post-link :post="post" class="text-uppercase c-green">Leer Mas</post-link>
             </div>
             <div class="tags container-flex">
                 <tag-header :post="post"></tag-header>

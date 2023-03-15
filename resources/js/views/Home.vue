@@ -12,7 +12,7 @@ export default {
         axios
             .get("/api/posts")
             .then((response) => {
-                console.log(response.data);
+                // console.log(response.data);
                 this.posts = response.data.data;
             })
             .catch((err) => {

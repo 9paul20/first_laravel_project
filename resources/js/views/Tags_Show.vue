@@ -1,6 +1,5 @@
 <template>
     <section class="posts container">
-
         <!--  @if (isset($title))
             <h3>{{ $title }}</h3>
         @endif  -->
@@ -21,22 +20,24 @@
 
 <script>
 export default {
+    props: ['tag'],
     data() {
         return {
-            posts: []
-        }
-    }, mounted() {
+            posts: [],
+        };
+    },
+    mounted() {
         axios
-            .get(`/api/tags/${this.$route.params.tag}`)
+            .get(`/api/tags/${this.tag}`)
             .then((response) => {
-                console.log(response.data.data);
+                // console.log(response.data.data);
                 this.posts = response.data.data;
             })
             .catch((err) => {
-                console.log(err.response.data)
+                console.log(err.response.data);
             });
-    }
-}
+    },
+};
 </script>
 
 <style></style>

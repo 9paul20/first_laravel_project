@@ -34,7 +34,7 @@ Route::get('posts', function () {
 })->name('posts');
 
 /*Route::get('admin', function () {
-    return view('admin.layout');
+return view('admin.layout');
 })->middleware('auth')->name('admin');*/
 
 

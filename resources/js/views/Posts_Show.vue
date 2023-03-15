@@ -25,11 +25,13 @@
             </footer>
             <!-- @include('partials.disqus-script') -->
         </div>
+        <disqus-comments></disqus-comments>
     </article>
 </template>
 
 <script>
 export default {
+    props: ['url'],
     data() {
         return {
             post: {
@@ -39,7 +41,7 @@ export default {
         }
     }, mounted() {
         axios
-            .get(`/api/blog/${this.$route.params.url}`)
+            .get(`/api/blog/${this.url}`)
             .then(response => {
                 this.post = response.data;
             }).catch(err => {

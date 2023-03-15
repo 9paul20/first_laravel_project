@@ -32,16 +32,19 @@ export const routes = [
         path: "/blog/:url",
         name: "Posts_Show",
         component: Posts_Show,
+        props: true,
     },
     {
         path: "/categories/:category",
         name: "Categories_Show",
         component: Categories_Show,
+        props: true,
     },
     {
         path: "/tags/:tag",
         name: "Tags_Show",
         component: Tags_Show,
+        props: true,
     },
     {
         path: "*",

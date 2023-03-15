@@ -17,15 +17,16 @@
 
 <script>
 export default {
+    props: ['category'],
     data() {
         return {
             posts: []
         }
     }, mounted() {
         axios
-            .get(`/api/categories/${this.$route.params.category}`)
+            .get(`/api/categories/${this.category}`)
             .then((response) => {
-                console.log(response.data);
+                // console.log(response.data);
                 this.posts = response.data.data;
             })
             .catch((err) => {

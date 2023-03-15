@@ -7,9 +7,9 @@
                 </span>
             </div>
             <div class="post-category">
-                <span class="category"><router-link
-                        :to="{ name: 'Categories_Show', params: { category: post.category.url } }">{{
-                            post.category.name }}</router-link></span>
+                <span class="category">
+                    <category-link :category="post.category"></category-link>
+                </span>
             </div>
         </header>
         <h1>{{ post.title }}</h1>

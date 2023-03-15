@@ -44,21 +44,23 @@ class PagesController extends Controller
     {
         \DB::statement("SET lc_time_names = 'es_ES'");
         //TODO: Es recomendable trabajar con un dd() o return la variable archive, así se sabe como se van a regresar los valores y que valores está dando
-        // $archive = Post::selectRaw('YEAR(published_at) year')
-        //     ->selectRaw('month(published_at) month')
-        //     ->selectRaw('monthname(published_at) monthname')
-        //     ->selectRaw('COUNT(*) posts')
-        //     ->groupBy('year', 'month', 'monthname')
-        //     ->orderByRaw('MIN(published_at)')
-        //     ->get();
-
-        $archive = Post::byYearAndMonth()->get();
-        return view('pages.archive', [
+        $archive = [
             'authors' => User::latest()->take(4)->get(),
             'categories' => Category::take(7)->get(),
             'posts' => Post::latest('published_at')->take(5)->get(),
-            'archive' => $archive
-        ]);
+            'archive' => Post::selectRaw('YEAR(published_at) year')
+                ->selectRaw('month(published_at) month')
+                ->selectRaw('monthname(published_at) monthname')
+                ->selectRaw('COUNT(*) posts')
+                ->groupBy('year', 'month', 'monthname')
+                ->orderByRaw('MIN(published_at)')
+                ->get()
+        ];
+        if (request()->wantsJson()) {
+            return $archive;
+        }
+        // $archive = Post::byYearAndMonth()->get();
+        return view('pages.archive', $archive);
     }
 
     public function contact()
